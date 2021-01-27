@@ -1,0 +1,33 @@
+<table>
+	<thead>
+		<tr>
+			<th>提出物</th>
+			<th>提出期限</th>
+			<th>提出完了</th>
+			<th>削除</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @submissions.each do |submission|%>
+			<tr>
+				</td>
+				<td><%= submission.title %></td>
+        <td><%= submission.limit %></td>
+				<td><% unless submission.completed %>
+					<form action="/submissions/<%= submission.id%>/done" method="post">
+						<input type="submit" value="完了">
+					</form>
+				<% else %>
+					提出完了
+				<% end %>
+				</td>
+				<td>
+				<form action="/submissions/<%= submission.id %>/delete" method="post">
+					<input type="submit" value="削除">
+				</form>
+				</td>
+		  </tr>
+		<% end %>
+			<tr><td colspan="6"><a href="/submissions/new">新規提出物</a></td></tr>
+	</tbody>
+</table>
