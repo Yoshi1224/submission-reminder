@@ -1,7 +1,7 @@
 require 'bundler'
 Bundler.require
 
-require './app_main'
+require './app'
 run Sinatra::Application
 
 $stdout.sync = true
