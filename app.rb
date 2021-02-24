@@ -105,7 +105,7 @@ post '/callback' do
         message = []
         submissions = Submission.all
         submissions.each do |submission|
-          if submission.limit < Date.today
+          if submission.limit < Date.today && !(submission.completed)
         message.push({
           type: 'text',
           text: "#{submission.title}の#{submission.limit}を過ぎてます"
