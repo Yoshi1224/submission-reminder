@@ -5,6 +5,7 @@ require 'sinatra/reloader' if development?
 require './models'
 require 'sinatra'
 require 'line/bot'
+require 'date'
 
 enable :sessions
 
@@ -101,15 +102,20 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
+        submissions = Submission.all
+        submissions.each do |submission|
+          if submission.limit < Date.today
         message = {
           type: 'text',
-          text: event.message['text']
+          text: "#{submission.title}の#{submission.limit}を過ぎてます"
         }
         client.reply_message(event['replyToken'], message)
-      when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-        response = client.get_message_content(event.message['id'])
-        tf = Tempfile.open("content")
-        tf.write(response.body)
+          end
+        end
+      # when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
+      #   response = client.get_message_content(event.message['id'])
+      #   tf = Tempfile.open("content")
+      #   tf.write(response.body)
       end
     end
   }
