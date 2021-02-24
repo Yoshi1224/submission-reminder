@@ -94,6 +94,7 @@ post '/callback' do
     error 400 do 'Bad Request' end
   end
 
+  puts 'ttt'
   events = client.parse_events_from(body)
   events.each { |event|
     case event
@@ -102,7 +103,7 @@ post '/callback' do
       when Line::Bot::Event::MessageType::Text
         message = {
           type: 'text',
-          text: 'おい'
+          text: event.message['text']
         }
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
