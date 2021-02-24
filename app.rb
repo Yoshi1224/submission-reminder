@@ -102,13 +102,14 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text
+        message = []
         submissions = Submission.all
         submissions.each do |submission|
           if submission.limit < Date.today
-        message = {
+        message.push ({
           type: 'text',
           text: "#{submission.title}の#{submission.limit}を過ぎてます"
-        }
+        })
         client.reply_message(event['replyToken'], message)
           end
         end
