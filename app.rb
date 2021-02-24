@@ -90,9 +90,9 @@ post '/callback' do
   puts client
   puts body
   puts signature
-  unless client.validate_signature(body, signature)
-    error 400 do 'Bad Request' end
-  end
+  # unless client.validate_signature(body, signature)
+  #   error 400 do 'Bad Request' end
+  # end
 
   puts 'ttt'
   events = client.parse_events_from(body)
